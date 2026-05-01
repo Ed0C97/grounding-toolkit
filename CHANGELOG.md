@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to lockstep CalVer (`YYYY.M.D.N`) with the
 Sentinel monorepo.
 
+## [2026.5.15.19] — 2026-05-01 — Lockstep bump for FASE α (Sentinel)
+
+Lockstep version bump to align with Sentinel `v2026.5.15.19` and
+cognis-toolkit `v2026.5.15.19`.  No grounding-toolkit code changes —
+this release is the marker that the Sentinel-side FASE α (Cohere →
+local-models migration) shipped.  The Tier 2/3/4 wiring (D5) lands
+in FASE β.
+
+### Lockstep version refresh
+
+- `pyproject.toml` 2026.5.15.0 → 2026.5.15.19
+- `src/grounding/__init__.py` `__version__`
+- `src/grounding/provisioning/manifest.yaml`
+
 ## [2026.5.15.0] — 2026-05-01
 
 ### Added — Phase 0: foundation
