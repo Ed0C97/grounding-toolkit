@@ -1,4 +1,8 @@
-"""grounding.crossdoc — multi-document grounding.
+"""grounding.crossdoc — multi-document grounding."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.crossdoc.linker import DocumentLinker, DocumentRef
+from grounding.crossdoc.retriever import CrossDocVerifier
+
+__all__ = ["CrossDocVerifier", "DocumentLinker", "DocumentRef"]
