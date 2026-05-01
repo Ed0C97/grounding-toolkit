@@ -1,4 +1,21 @@
-"""grounding.consensus — quorum aggregation (migrated from Sentinel SupremeJudge in P16).
+"""grounding.consensus — quorum aggregation (migrated from Sentinel SupremeJudge.aggregate)."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.consensus.quorum import (
+    DEFAULT_SEVERITY_ORDER,
+    DEFAULT_SEVERITY_REVERSE,
+    DisagreementHook,
+    QuorumConfig,
+    aggregate,
+    aggregate_findings_list,
+)
+
+__all__ = [
+    "DEFAULT_SEVERITY_ORDER",
+    "DEFAULT_SEVERITY_REVERSE",
+    "DisagreementHook",
+    "QuorumConfig",
+    "aggregate",
+    "aggregate_findings_list",
+]
