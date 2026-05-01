@@ -1,4 +1,17 @@
-"""grounding.constitutional — YAML-driven rules engine (rules supplied by consumer).
+"""grounding.constitutional — YAML-driven rules engine."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.constitutional.rules import (
+    PredicateFn,
+    Rule,
+    RulesEngine,
+    RuleViolation,
+)
+
+__all__ = [
+    "PredicateFn",
+    "Rule",
+    "RuleViolation",
+    "RulesEngine",
+]
