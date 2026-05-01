@@ -1,4 +1,7 @@
-"""grounding.definitional — term-definition consistency.
+"""grounding.definitional — term-definition consistency."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.definitional.consistency import DefinitionalVerifier
+
+__all__ = ["DefinitionalVerifier"]

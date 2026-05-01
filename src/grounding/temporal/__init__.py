@@ -1,4 +1,7 @@
-"""grounding.temporal — date / timeline grounding.
+"""grounding.temporal — date / timeline grounding."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.temporal.date_grounding import DateTimeline, TemporalVerifier
+
+__all__ = ["DateTimeline", "TemporalVerifier"]
