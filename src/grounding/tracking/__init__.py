@@ -1,4 +1,15 @@
-"""grounding.tracking — event tracker (migrated from Sentinel hallucination_tracker in P16).
+"""grounding.tracking — event tracker (migrated from Sentinel hallucination_tracker)."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.tracking.event_tracker import (
+    HallucinationEvent,
+    HallucinationTracker,
+    hallucination_tracker,
+)
+
+__all__ = [
+    "HallucinationEvent",
+    "HallucinationTracker",
+    "hallucination_tracker",
+]
