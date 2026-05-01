@@ -1,4 +1,11 @@
-"""grounding.numerical — number extraction + generic derivation verification.
+"""grounding.numerical — number extraction + generic derivation verification."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.numerical.number_extraction import (
+    ExtractedNumber,
+    NumberExtractor,
+    numbers_match,
+)
+
+__all__ = ["ExtractedNumber", "NumberExtractor", "numbers_match"]
