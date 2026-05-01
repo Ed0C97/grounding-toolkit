@@ -1,0 +1,205 @@
+{
+  "name": "sentinel-dd-synthetic",
+  "version": "0.1.0",
+  "description": "Synthetic seed dataset for the D6 calibration framework smoke-test. NOT a substitute for the real ~500-record annotated dataset (D6 production); records here are hand-crafted to exercise every detector path (page / evidence / number / definition / temporal) on every label (GROUNDED / UNGROUNDED / UNCERTAIN). Replace with the real dataset before running tuner.tune() against production thresholds.",
+  "locale": "en",
+  "records": [
+    {
+      "record_id": "evidence-grounded-1",
+      "claim": {
+        "text": "The borrower has DSCR of 1.4x for the senior facility",
+        "page": 12
+      },
+      "source": {
+        "text": "Section 3.2 — Financial Covenants. The borrower shall maintain a Debt Service Coverage Ratio (DSCR) of at least 1.40x for the senior facility, tested quarterly on a trailing twelve-month basis.",
+        "doc_id": "synthetic-doc-1",
+        "language": "en"
+      },
+      "label": "GROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Direct quote of DSCR figure with page anchor."
+    },
+    {
+      "record_id": "evidence-ungrounded-1",
+      "claim": {
+        "text": "The borrower agreed to a personal guarantee from the CEO"
+      },
+      "source": {
+        "text": "Section 3.2 — Financial Covenants. The borrower shall maintain a Debt Service Coverage Ratio (DSCR) of at least 1.40x for the senior facility.",
+        "doc_id": "synthetic-doc-1",
+        "language": "en"
+      },
+      "label": "UNGROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Personal guarantee not mentioned anywhere in the source."
+    },
+    {
+      "record_id": "definition-grounded-1",
+      "claim": {
+        "text": "DSCR means Debt Service Coverage Ratio"
+      },
+      "source": {
+        "text": "Definitions: \"DSCR\" means Debt Service Coverage Ratio, computed as EBITDA divided by total debt service.",
+        "doc_id": "synthetic-doc-2",
+        "language": "en"
+      },
+      "label": "GROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Definition explicitly cited in glossary section."
+    },
+    {
+      "record_id": "definition-ungrounded-1",
+      "claim": {
+        "text": "DSCR means Demonstrable Sustainable Cash Receipts"
+      },
+      "source": {
+        "text": "Definitions: \"DSCR\" means Debt Service Coverage Ratio, computed as EBITDA divided by total debt service.",
+        "doc_id": "synthetic-doc-2",
+        "language": "en"
+      },
+      "label": "UNGROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Made-up definition; the source defines DSCR differently."
+    },
+    {
+      "record_id": "number-grounded-1",
+      "claim": {
+        "text": "Interest rate is 7.25% per annum",
+        "page": 5
+      },
+      "source": {
+        "text": "Article IV. Interest. The Loan shall bear interest at a fixed rate of 7.25% per annum, payable in arrears on each Interest Payment Date.",
+        "doc_id": "synthetic-doc-3",
+        "language": "en"
+      },
+      "label": "GROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Numeric figure exactly present in source."
+    },
+    {
+      "record_id": "number-ungrounded-1",
+      "claim": {
+        "text": "Interest rate is 4.50% per annum"
+      },
+      "source": {
+        "text": "Article IV. Interest. The Loan shall bear interest at a fixed rate of 7.25% per annum.",
+        "doc_id": "synthetic-doc-3",
+        "language": "en"
+      },
+      "label": "UNGROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Wrong rate fabricated; source explicitly says 7.25%."
+    },
+    {
+      "record_id": "page-grounded-1",
+      "claim": {
+        "text": "The maturity is 5 years",
+        "page": 3
+      },
+      "source": {
+        "text": "(Page 1) Loan summary.\n(Page 2) Definitions.\n(Page 3) Article II — Term. The maturity is 5 years from the Closing Date.\n(Page 4) Conditions precedent.",
+        "pages": [
+          "Loan summary.",
+          "Definitions.",
+          "Article II — Term. The maturity is 5 years from the Closing Date.",
+          "Conditions precedent."
+        ],
+        "page_count": 4,
+        "doc_id": "synthetic-doc-4",
+        "language": "en"
+      },
+      "label": "GROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Page reference matches the actual page where the maturity is stated."
+    },
+    {
+      "record_id": "page-ungrounded-1",
+      "claim": {
+        "text": "The maturity is 5 years",
+        "page": 99
+      },
+      "source": {
+        "text": "(Page 1) Loan summary.\n(Page 2) Definitions.\n(Page 3) Article II — Term. The maturity is 5 years from the Closing Date.",
+        "pages": [
+          "Loan summary.",
+          "Definitions.",
+          "Article II — Term. The maturity is 5 years from the Closing Date."
+        ],
+        "page_count": 3,
+        "doc_id": "synthetic-doc-4",
+        "language": "en"
+      },
+      "label": "UNGROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Cited page 99 but the document only has 3 pages — fabricated page reference."
+    },
+    {
+      "record_id": "paraphrase-grounded-1",
+      "claim": {
+        "text": "Quarterly compliance reporting is required"
+      },
+      "source": {
+        "text": "The borrower shall deliver to the Agent, no later than 30 days after the end of each fiscal quarter, a Compliance Certificate signed by the CFO.",
+        "doc_id": "synthetic-doc-5",
+        "language": "en"
+      },
+      "label": "GROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Paraphrased — Tier 0/1 lexical likely fails; Tier 2 semantic / Tier 3 NLI should rescue this."
+    },
+    {
+      "record_id": "italian-grounded-1",
+      "claim": {
+        "text": "Il DSCR deve essere mantenuto almeno a 1.40x"
+      },
+      "source": {
+        "text": "Sezione 3.2 — Covenants. Il debitore manterra' un DSCR di almeno 1,40x per la facility senior.",
+        "doc_id": "synthetic-doc-6",
+        "language": "it"
+      },
+      "label": "GROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Italian source + Italian claim, with EU number format (1,40x in source vs 1.40x in claim)."
+    },
+    {
+      "record_id": "uncertain-1",
+      "claim": {
+        "text": "The covenant test was satisfied as of last quarter"
+      },
+      "source": {
+        "text": "The borrower has covenants regarding DSCR and leverage ratios. Tests are run quarterly.",
+        "doc_id": "synthetic-doc-7",
+        "language": "en"
+      },
+      "label": "UNCERTAIN",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Source describes the testing process but doesn't confirm whether the latest test passed; claim cannot be fully grounded or refuted."
+    },
+    {
+      "record_id": "contradiction-1",
+      "claim": {
+        "text": "The loan is unsecured"
+      },
+      "source": {
+        "text": "Article V — Security. The Loan is secured by a first-priority lien over all the Borrower's tangible and intangible assets.",
+        "doc_id": "synthetic-doc-8",
+        "language": "en"
+      },
+      "label": "UNGROUNDED",
+      "annotator": "synthetic",
+      "annotation_date": "2026-05-01",
+      "notes": "Direct contradiction — source explicitly states the loan IS secured."
+    }
+  ]
+}
