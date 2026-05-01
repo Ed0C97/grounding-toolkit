@@ -1,4 +1,8 @@
-"""grounding.tiers — verification tiers (consensus / lexical / semantic / NLI / LLM-judge).
+"""grounding.tiers — verification tiers."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.tiers.consensus import ConsensusTier
+from grounding.tiers.lexical import LexicalTier, compute_text_overlap
+
+__all__ = ["ConsensusTier", "LexicalTier", "compute_text_overlap"]
