@@ -1,0 +1,36 @@
+toolkit: grounding-toolkit
+version: "2026.5.15.0"
+groups:
+  - id: smoke
+    name: "Smoke (10s)"
+    runner: grounding.testing.smoke:run
+  - id: unit
+    name: "Unit"
+    path: "tests/unit"
+  - id: unit-core
+    name: "Core (cascade + types + ports)"
+    path: "tests/unit/core"
+  - id: unit-tiers
+    name: "Tiers (consensus / lexical / stubs)"
+    path: "tests/unit/tiers"
+  - id: unit-citations
+    name: "Citations (preventive)"
+    path: "tests/unit/citations"
+  - id: unit-multimodal
+    name: "Multimodal (tables / KV)"
+    path: "tests/unit/multimodal"
+  - id: unit-numerical
+    name: "Numerical (extraction / derivation)"
+    path: "tests/unit/numerical"
+  - id: unit-explainability
+    name: "Explainability (evidence / conflict)"
+    path: "tests/unit/explainability"
+  - id: unit-audit
+    name: "Audit (Merkle / reasoning log)"
+    path: "tests/unit/audit"
+  - id: unit-eval
+    name: "Eval harness"
+    path: "tests/unit/eval"
+  - id: parity
+    name: "Cross-toolkit parity"
+    path: "tests/parity"

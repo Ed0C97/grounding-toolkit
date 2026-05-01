@@ -1,0 +1,59 @@
+Metadata-Version: 2.4
+Name: grounding-toolkit
+Version: 2026.5.15.0
+Summary: Groundedness & hallucination detection — multi-tier cascade (consensus + lexical + semantic + NLI + LLM-judge), preventive citations, multimodal verification, explainable evidence, audit-grade Merkle proofs. Consumer-agnostic; embedding / NLI / LLM judge are injected.
+Author: grounding-toolkit contributors
+License: MIT
+Project-URL: Repository, https://github.com/Ed0C97/grounding-toolkit
+Project-URL: Documentation, https://github.com/Ed0C97/grounding-toolkit#readme
+Project-URL: Issues, https://github.com/Ed0C97/grounding-toolkit/issues
+Project-URL: Changelog, https://github.com/Ed0C97/grounding-toolkit/blob/main/CHANGELOG.md
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: Typing :: Typed
+Requires-Python: >=3.11
+License-File: LICENSE
+License-File: AUTHORS.md
+Requires-Dist: pydantic>=2.6
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: httpx>=0.27
+Provides-Extra: cognis
+Requires-Dist: cognis-toolkit>=2026.5.15.9; extra == "cognis"
+Provides-Extra: ocr
+Requires-Dist: ocr-toolkit>=2026.5.15.0; extra == "ocr"
+Provides-Extra: dspy
+Requires-Dist: dspy-toolkit>=2026.5.15.0; extra == "dspy"
+Requires-Dist: dspy>=2.4; extra == "dspy"
+Provides-Extra: pdffinder
+Requires-Dist: pdf-finder-toolkit>=2026.5.15.0; extra == "pdffinder"
+Provides-Extra: ragas
+Requires-Dist: ragas>=0.1; extra == "ragas"
+Provides-Extra: deepeval
+Requires-Dist: deepeval>=0.21; extra == "deepeval"
+Provides-Extra: trulens
+Requires-Dist: trulens-eval>=0.20; extra == "trulens"
+Provides-Extra: sbert
+Requires-Dist: sentence-transformers>=2.7; extra == "sbert"
+Provides-Extra: all
+Requires-Dist: cognis-toolkit>=2026.5.15.9; extra == "all"
+Requires-Dist: ocr-toolkit>=2026.5.15.0; extra == "all"
+Requires-Dist: dspy-toolkit>=2026.5.15.0; extra == "all"
+Requires-Dist: dspy>=2.4; extra == "all"
+Requires-Dist: pdf-finder-toolkit>=2026.5.15.0; extra == "all"
+Requires-Dist: ragas>=0.1; extra == "all"
+Requires-Dist: deepeval>=0.21; extra == "all"
+Requires-Dist: trulens-eval>=0.20; extra == "all"
+Requires-Dist: sentence-transformers>=2.7; extra == "all"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.23; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+Dynamic: license-file

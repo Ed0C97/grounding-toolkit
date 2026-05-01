@@ -1,0 +1,106 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "grounding-toolkit"
+# Lockstep CalVer YYYY.M.D.N — matches the rest of the Sentinel monorepo
+# (cognis-toolkit, exchequer-toolkit, ocr-toolkit, dspy-toolkit,
+# rlm-toolkit, pdf-finder-toolkit).
+# 2026.5.15.0 — Phase 0 foundation (scaffold + provisioning bridge +
+#               testing module + smoke). 7th sibling toolkit.
+version = "2026.5.15.0"
+description = "Groundedness & hallucination detection — multi-tier cascade (consensus + lexical + semantic + NLI + LLM-judge), preventive citations, multimodal verification, explainable evidence, audit-grade Merkle proofs. Consumer-agnostic; embedding / NLI / LLM judge are injected."
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "grounding-toolkit contributors"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+    "Typing :: Typed",
+]
+
+dependencies = [
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+# Each extra is independently installable so consumers only pull what they
+# actually wire in.
+cognis    = ["cognis-toolkit>=2026.5.15.9"]
+ocr       = ["ocr-toolkit>=2026.5.15.0"]
+dspy      = ["dspy-toolkit>=2026.5.15.0", "dspy>=2.4"]
+pdffinder = ["pdf-finder-toolkit>=2026.5.15.0"]
+ragas     = ["ragas>=0.1"]
+deepeval  = ["deepeval>=0.21"]
+trulens   = ["trulens-eval>=0.20"]
+sbert     = ["sentence-transformers>=2.7"]
+all       = [
+    "cognis-toolkit>=2026.5.15.9",
+    "ocr-toolkit>=2026.5.15.0",
+    "dspy-toolkit>=2026.5.15.0", "dspy>=2.4",
+    "pdf-finder-toolkit>=2026.5.15.0",
+    "ragas>=0.1",
+    "deepeval>=0.21",
+    "trulens-eval>=0.20",
+    "sentence-transformers>=2.7",
+]
+dev = ["pytest>=7.0", "pytest-asyncio>=0.23", "pytest-cov>=4.0", "ruff>=0.5"]
+
+[project.urls]
+Repository    = "https://github.com/Ed0C97/grounding-toolkit"
+Documentation = "https://github.com/Ed0C97/grounding-toolkit#readme"
+Issues        = "https://github.com/Ed0C97/grounding-toolkit/issues"
+Changelog     = "https://github.com/Ed0C97/grounding-toolkit/blob/main/CHANGELOG.md"
+
+[project.scripts]
+grounding = "grounding.cli.main:main"
+
+[project.entry-points."sentinel_provisioning"]
+grounding = "grounding.provisioning:descriptor"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["grounding*"]
+
+[tool.setuptools.package-data]
+grounding = [
+    "py.typed",
+    "provisioning/*.yaml",
+    "cli/templates/*.yaml",
+    "cli/templates/*.md",
+    "calibration/golden/*.json",
+    "constitutional/rules/*.yaml",
+]
+
+[tool.pytest.ini_options]
+# Default test discovery covers offline suites only — keeps the default
+# run zero-skip. Live tests + integration smoke must be invoked
+# explicitly: ``pytest tests/integration``.
+testpaths = ["tests/unit", "tests/parity"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
+addopts = "-ra --strict-markers -p no:hydra_pytest"
+markers = [
+    "integration: tests that touch a real backend (LLM, embedding, RAG)",
+    "slow: tests >1s",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = ["E501"]
