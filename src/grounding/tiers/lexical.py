@@ -17,6 +17,7 @@ empty source returns SKIPPED.
 from __future__ import annotations
 
 import difflib
+import re
 from dataclasses import dataclass
 
 from grounding.core.types import (
@@ -26,6 +27,11 @@ from grounding.core.types import (
     TierVerdict,
     Verdict,
 )
+
+
+# Word-character tokenizer used by :func:`compute_text_overlap` so
+# trailing punctuation does not break Jaccard agreement.
+_TOKEN_RE = re.compile(r"\w+", re.UNICODE)
 
 
 @dataclass
@@ -114,14 +120,17 @@ class LexicalTier:
 def compute_text_overlap(a: str, b: str) -> float:
     """Token-set Jaccard overlap between two strings.
 
+    Tokenisation uses ``\\w+`` so adjacent punctuation does not cause
+    spurious mismatches (``"strong."`` matches ``"strong"``).
+
     Pre-migration parity helper for Sentinel's
     ``sentinel.utils.definition_finder.compute_text_overlap`` (P16
     hard-cutover).  Returns 0..1.
     """
     if not a or not b:
         return 0.0
-    sa = set(a.lower().split())
-    sb = set(b.lower().split())
+    sa = set(_TOKEN_RE.findall(a.lower()))
+    sb = set(_TOKEN_RE.findall(b.lower()))
     inter = sa & sb
     union = sa | sb
     return len(inter) / len(union) if union else 0.0
