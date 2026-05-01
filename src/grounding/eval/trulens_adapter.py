@@ -26,7 +26,7 @@ def trulens_groundedness(
     """Return the deterministic grounding score of ``response`` against
     ``contexts``."""
     _ = query  # unused, kept for TruLens signature compatibility
-    return grounding_score(response, contexts)
+    return grounding_score(response, list(contexts)).score
 
 
 def trulens_faithfulness(

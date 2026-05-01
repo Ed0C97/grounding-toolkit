@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
-from grounding.definitional.consistency import DefinitionalVerifier
+from grounding.definitional.consistency import (
+    DefinitionalVerifier,
+    definition_text_overlap,
+)
 
-__all__ = ["DefinitionalVerifier"]
+__all__ = ["DefinitionalVerifier", "definition_text_overlap"]

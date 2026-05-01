@@ -1,4 +1,7 @@
-"""grounding.answer — RAG answer verifier (migrated from Sentinel chat_verifier in P16).
+"""grounding.answer — RAG answer verifier (migrated from Sentinel chat_verifier)."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.answer.verifier import AnswerVerifier, ChatJsonFn
+
+__all__ = ["AnswerVerifier", "ChatJsonFn"]

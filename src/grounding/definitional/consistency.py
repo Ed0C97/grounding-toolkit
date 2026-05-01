@@ -14,6 +14,12 @@ Two checks:
 
 Both checks are domain-agnostic: glossaries are supplied by the
 consumer (Sentinel, in our case, populates them via Resolver agent).
+
+Also exports :func:`definition_text_overlap` — an asymmetric
+definition-grounded ratio that mirrors Sentinel's pre-migration
+``sentinel.utils.definition_finder.compute_text_overlap`` (3+ char
+tokens, division by definition-token count not by union).  Distinct
+from :func:`grounding.tiers.lexical.compute_text_overlap` (Jaccard).
 """
 
 from __future__ import annotations
@@ -30,6 +36,33 @@ from grounding.core.types import (
     Verdict,
 )
 from grounding.tiers.lexical import compute_text_overlap
+
+
+# Asymmetric definition-grounded ratio: fraction of definition tokens
+# (>= 3 chars) that also appear in the source text.
+_DEF_TOKEN_RE = re.compile(r"\b\w{3,}\b")
+
+
+def definition_text_overlap(
+    definition: str, source_text: str
+) -> float:
+    """Asymmetric definition-grounded ratio.
+
+    Returns ``|def_tokens & source_tokens| / |def_tokens|``, with
+    tokens normalised to lower-case and filtered to length >= 3.
+
+    Migrated bit-for-bit from Sentinel's
+    ``sentinel.utils.definition_finder.compute_text_overlap`` so the
+    Resolver's 0.30 grounding threshold keeps its exact semantics
+    after the hard cutover.
+    """
+    if not definition or not source_text:
+        return 0.0
+    def_tokens = set(_DEF_TOKEN_RE.findall(definition.lower()))
+    if not def_tokens:
+        return 0.0
+    src_tokens = set(_DEF_TOKEN_RE.findall(source_text.lower()))
+    return len(def_tokens & src_tokens) / len(def_tokens)
 
 
 # Patterns to extract candidate "definitional" terms from claim text:

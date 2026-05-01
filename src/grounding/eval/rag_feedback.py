@@ -1,83 +1,182 @@
 """RAG feedback evaluation.
 
-The Sentinel-side ``observability/feedback_funcs.grounding_score`` ships
-a deterministic Jaccard-based groundedness check used by the implicit
-feedback collector.  Phase 16 hard-cutovers Sentinel imports to point
-here; the implementation matches Sentinel's contract bit-for-bit.
+Migrated from Sentinel's
+``sentinel.observability.feedback_funcs`` (P16 hard cutover).
 
-The metric is intentionally simple: per-sentence max Jaccard against
-sources, averaged over all answer sentences.  Token-level Jaccard is
-the only operation, so the function is extremely fast and dependency-free.
+Three TruLens-style feedback functions:
+
+- :func:`grounding_score` — claim ↔ source coverage (per-sentence max
+  Jaccard, averaged).
+- :func:`relevance_score` — query ↔ answer Jaccard.
+- :func:`harmfulness_score` — keyword-based harm detector.
+
+All three return a :class:`FeedbackScore` dataclass with
+``name`` / ``score`` (clamped to [0, 1]) / ``explanation`` / ``backend``.
+
+:func:`evaluate_bundle` runs all three and returns a dict.
 """
 
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import List, Sequence
+from typing import Dict, Iterable, List, Sequence
 
 
+@dataclass
+class FeedbackScore:
+    """Single feedback metric."""
+
+    name: str
+    score: float  # clamped into [0, 1] by ``to_dict``
+    explanation: str = ""
+    backend: str = "heuristic"
+
+    def to_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "score": round(max(0.0, min(1.0, self.score)), 4),
+            "explanation": self.explanation,
+            "backend": self.backend,
+        }
+
+
+# ---------------------------------------------------------------------------
+# Tokenisation + helpers
+# ---------------------------------------------------------------------------
+
+
+_PUNCT = ",.:;!?()[]{}\"'`"
 _SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+|\n+")
+
+
+def _tokens(text: str) -> set:
+    out: set = set()
+    for raw in text.split():
+        cleaned = raw.strip(_PUNCT).lower()
+        if cleaned:
+            out.add(cleaned)
+    return out
+
+
+def _jaccard(a: str, b: str) -> float:
+    ta, tb = _tokens(a), _tokens(b)
+    if not ta or not tb:
+        return 0.0
+    return len(ta & tb) / len(ta | tb)
 
 
 def _split_sentences(text: str) -> List[str]:
     if not text:
         return []
-    return [s.strip() for s in _SENTENCE_SPLIT.split(text) if s.strip()]
+    return [
+        s.strip() for s in _SENTENCE_SPLIT.split(text) if s.strip()
+    ]
 
 
-def _jaccard(a: str, b: str) -> float:
-    sa = set(a.lower().split())
-    sb = set(b.lower().split())
-    if not sa or not sb:
+def _best_coverage(claims: Iterable[str], sources: Sequence[str]) -> float:
+    claim_list = list(claims)
+    if not claim_list or not sources:
         return 0.0
-    inter = sa & sb
-    union = sa | sb
-    return len(inter) / len(union)
+    total = 0.0
+    for claim in claim_list:
+        total += max(_jaccard(claim, s) for s in sources)
+    return total / len(claim_list)
+
+
+_HARMFUL_PATTERNS = [
+    r"\bkill\b",
+    r"\bexplode\b",
+    r"\bsuicide\b",
+    r"\bweapon\b",
+    r"\bhack(?:er|ing|)\b",
+    r"\bdrug(?:s)?\b",
+    r"\bharass",
+]
+
+
+def _harm_hits(text: str) -> int:
+    n = 0
+    for pattern in _HARMFUL_PATTERNS:
+        if re.search(pattern, text, re.IGNORECASE):
+            n += 1
+    return n
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
 
 
 def grounding_score(
-    answer: str,
-    sources: Sequence[str],
-) -> float:
-    """Average max-Jaccard of every answer sentence against any source.
-
-    Mirrors :func:`sentinel.observability.feedback_funcs.grounding_score`.
-    Returns 0.0 for empty inputs.
-    """
+    answer: str, sources: Sequence[str]
+) -> FeedbackScore:
+    """How well is each sentence of ``answer`` grounded in ``sources``?"""
+    if not answer.strip():
+        return FeedbackScore(
+            name="grounding", score=0.0, explanation="empty answer"
+        )
     sentences = _split_sentences(answer)
-    if not sentences or not sources:
-        return 0.0
-    total = 0.0
-    for s in sentences:
-        best = 0.0
-        for src in sources:
-            score = _jaccard(s, src)
-            if score > best:
-                best = score
-        total += best
-    return total / len(sentences)
-
-
-@dataclass
-class BundleEvaluation:
-    """Summary returned by :func:`evaluate_bundle`."""
-
-    grounding_score: float
-    n_sentences: int
-    n_sources: int
-
-
-def evaluate_bundle(
-    answer: str,
-    sources: Sequence[str],
-) -> BundleEvaluation:
-    """Convenience wrapper: returns score + counts."""
-    return BundleEvaluation(
-        grounding_score=grounding_score(answer, sources),
-        n_sentences=len(_split_sentences(answer)),
-        n_sources=len(sources),
+    if not sentences:
+        sentences = [answer]
+    score = _best_coverage(sentences, sources)
+    explanation = (
+        f"{len(sentences)} claims vs {len(sources)} sources"
+    )
+    return FeedbackScore(
+        name="grounding", score=score, explanation=explanation
     )
 
 
-__all__ = ["BundleEvaluation", "evaluate_bundle", "grounding_score"]
+def relevance_score(query: str, answer: str) -> FeedbackScore:
+    """How relevant is ``answer`` to ``query``?"""
+    if not query.strip() or not answer.strip():
+        return FeedbackScore(
+            name="relevance", score=0.0, explanation="missing inputs"
+        )
+    score = _jaccard(query, answer)
+    return FeedbackScore(
+        name="relevance",
+        score=score,
+        explanation="jaccard(query, answer)",
+    )
+
+
+def harmfulness_score(answer: str) -> FeedbackScore:
+    """Simple keyword detector. Higher score → more suspected harm."""
+    hits = _harm_hits(answer)
+    if hits == 0:
+        return FeedbackScore(
+            name="harmfulness",
+            score=0.0,
+            explanation="no harmful patterns matched",
+        )
+    score = min(1.0, hits / 3.0)
+    return FeedbackScore(
+        name="harmfulness",
+        score=score,
+        explanation=f"{hits} harmful pattern(s) matched",
+    )
+
+
+def evaluate_bundle(
+    *,
+    query: str,
+    answer: str,
+    sources: Sequence[str],
+) -> Dict[str, FeedbackScore]:
+    """Run all three feedback functions and return a dict of scores."""
+    return {
+        "grounding": grounding_score(answer, list(sources)),
+        "relevance": relevance_score(query, answer),
+        "harmfulness": harmfulness_score(answer),
+    }
+
+
+__all__ = [
+    "FeedbackScore",
+    "evaluate_bundle",
+    "grounding_score",
+    "harmfulness_score",
+    "relevance_score",
+]

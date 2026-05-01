@@ -13,9 +13,11 @@ from grounding.eval.deepeval_adapter import (
     FaithfulnessMetric,
 )
 from grounding.eval.rag_feedback import (
-    BundleEvaluation,
+    FeedbackScore,
     evaluate_bundle,
     grounding_score,
+    harmfulness_score,
+    relevance_score,
 )
 from grounding.eval.ragas_metrics import (
     ContextPrecisionResult,
@@ -41,9 +43,11 @@ __all__ = [
     "ContextRecallResult",
     "FaithfulnessResult",
     # RAG feedback
-    "BundleEvaluation",
+    "FeedbackScore",
     "evaluate_bundle",
     "grounding_score",
+    "harmfulness_score",
+    "relevance_score",
     # DeepEval
     "ContextPrecisionMetric",
     "ContextRecallMetric",

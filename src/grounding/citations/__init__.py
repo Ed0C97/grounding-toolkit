@@ -15,6 +15,11 @@ from grounding.citations.structured_signature import (
     GroundedFindings,
     grounded_claim_system_prompt,
 )
+from grounding.citations.web_verify import (
+    CitationVerdict,
+    HttpFetcher,
+    verify_citation,
+)
 
 __all__ = [
     "SpanVerifier",
@@ -26,4 +31,7 @@ __all__ = [
     "GroundedClaimSpan",
     "GroundedFindings",
     "grounded_claim_system_prompt",
+    "CitationVerdict",
+    "HttpFetcher",
+    "verify_citation",
 ]
