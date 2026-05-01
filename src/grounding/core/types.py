@@ -125,9 +125,23 @@ class Source:
     Fully populated by the consumer.  The toolkit consumes only already-
     extracted data — it does NOT call ocr-toolkit, pdf-finder, or any
     other parser directly.
+
+    Fields:
+    - ``text``: concatenated full document text (typically OCR md+kv).
+    - ``pages``: optional per-page texts (1-indexed via ``pages[i-1]``).
+      When populated, span-based verification (``citations/span.py``) can
+      resolve a ``CitationSpan(page, ...)`` to the exact page text.
+    - ``tables`` / ``kv_pairs`` / ``figures`` / ``signatures``:
+      consumer-extracted multimodal artefacts.
+    - ``page_count``: total number of pages.  Auto-derived from
+      ``len(pages)`` when pages are supplied and ``page_count`` is left
+      at its default.
+    - ``doc_id``: stable identifier propagated into evidence pointers.
+    - ``language``: BCP-47-ish locale tag.
     """
 
     text: str = ""
+    pages: List[str] = field(default_factory=list)
     tables: List[Table] = field(default_factory=list)
     kv_pairs: Dict[str, str] = field(default_factory=dict)
     figures: List[Dict[str, Any]] = field(default_factory=list)
@@ -136,10 +150,40 @@ class Source:
     doc_id: str = "doc"
     language: str = "en"
 
+    def __post_init__(self) -> None:
+        if not self.page_count and self.pages:
+            self.page_count = len(self.pages)
+
+    def page_text(self, page: int) -> Optional[str]:
+        """Return the text for the 1-indexed ``page``, or None.
+
+        Falls back to ``self.text`` when no per-page texts are populated
+        and the requested page is 1.
+        """
+        if page < 1:
+            return None
+        if self.pages and page <= len(self.pages):
+            return self.pages[page - 1]
+        if not self.pages and page == 1:
+            return self.text or None
+        return None
+
     @classmethod
     def from_text(cls, text: str, **kwargs: Any) -> "Source":
         """Build a Source from a single text blob (convenience)."""
         return cls(text=text, **kwargs)
+
+    @classmethod
+    def from_pages(
+        cls, pages: List[str], **kwargs: Any
+    ) -> "Source":
+        """Build a Source from a list of per-page texts.
+
+        Auto-populates ``text`` with double-newline separators and
+        ``page_count`` from the list length.
+        """
+        text = "\n\n".join(pages)
+        return cls(text=text, pages=list(pages), **kwargs)
 
 
 @dataclass

@@ -15,6 +15,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List
 
+from grounding.citations.span import SpanVerifier
+from grounding.core.speculative import speculative_prescreen
 from grounding.core.thresholds import ThresholdProfile, modulate
 from grounding.core.types import (
     Claim,
@@ -31,31 +33,61 @@ from grounding.tiers.lexical import LexicalTier
 class GroundingVerifier:
     """Cascade orchestrator.
 
-    Phase 1 wires only the consensus prior + lexical tier.  Future
-    phases append additional tiers.
+    Pipeline (Phase 3):
+
+    1. Speculative pre-screen — if the claim has a citation_span and
+       the span deterministically matches, short-circuit GROUNDED.
+    2. Tier −1 — extract consensus prior from claim metadata.
+    3. Threshold modulation — scale per-tier thresholds by the prior.
+    4. Tier 0+1 — substring + lexical fuzzy.
+    5. Aggregate verdict + confidence.
+
+    Future phases append multimodal / numerical / temporal /
+    definitional / crossdoc / semantic / NLI / LLM-judge tiers, all
+    wired through the same orchestrator.
     """
 
     consensus_tier: ConsensusTier = field(default_factory=ConsensusTier)
     lexical_tier: LexicalTier = field(default_factory=LexicalTier)
+    span_verifier: SpanVerifier = field(default_factory=SpanVerifier)
     base_thresholds: ThresholdProfile = field(default_factory=ThresholdProfile)
 
     def verify(self, claim: Claim, source: Source) -> GroundingResult:
         trace: List[str] = []
         tier_results: dict[str, TierVerdict] = {}
 
-        # Tier −1: consensus prior
+        # Step 1 — speculative pre-screen
+        span_result = speculative_prescreen(
+            claim, source, verifier=self.span_verifier
+        )
+        if span_result is not None:
+            tier_results[span_result.name] = span_result
+            trace.append(
+                f"citation_span: {span_result.verdict.value} "
+                f"score={span_result.score:.3f}"
+            )
+            if span_result.verdict == Verdict.GROUNDED:
+                return GroundingResult(
+                    claim_text=claim.text,
+                    verdict=Verdict.GROUNDED,
+                    confidence=min(1.0, span_result.score),
+                    tier_results=tier_results,
+                    evidence_pointers=list(span_result.evidence),
+                    conflict_pointers=[],
+                    reasoning_trace=trace,
+                )
+
+        # Step 2 — consensus prior
         prior = self.consensus_tier.extract_prior(claim)
         consensus_result = self.consensus_tier.verify(claim, source)
         tier_results[consensus_result.name] = consensus_result
         trace.append(f"consensus prior: {prior.value}")
 
-        # Modulate thresholds
+        # Step 3 — threshold modulation
         thresholds = modulate(self.base_thresholds, prior)
-        trace.append(
-            f"thresholds: fuzzy={thresholds.fuzzy:.3f}"
-        )
+        trace.append(f"thresholds: fuzzy={thresholds.fuzzy:.3f}")
 
-        # Tier 0+1: lexical
+        # Step 4 — lexical
         lex_result = self.lexical_tier.verify(
             claim, source, threshold=thresholds.fuzzy
         )
@@ -65,7 +97,7 @@ class GroundingVerifier:
             f"score={lex_result.score:.3f}"
         )
 
-        # Aggregate
+        # Step 5 — aggregate
         if lex_result.verdict == Verdict.GROUNDED:
             verdict = Verdict.GROUNDED
             confidence = min(1.0, lex_result.score)
