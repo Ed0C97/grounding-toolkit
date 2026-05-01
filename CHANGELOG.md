@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to lockstep CalVer (`YYYY.M.D.N`) with the
 Sentinel monorepo.
 
+## [2026.5.15.20] — 2026-05-01 — D6 synthetic seed + FASE β lockstep
+
+Lockstep with sentinel `v2026.5.15.20` and cognis-toolkit
+`v2026.5.15.20`.
+
+### Added — D6: synthetic seed for the calibration tuner
+
+- `src/grounding/calibration/golden/sentinel-dd-synthetic.json` —
+  12-record hand-crafted GoldDataset covering every detector path
+  (evidence / number / definition / page / paraphrase / IT-EN /
+  contradiction) on every label (GROUNDED / UNGROUNDED / UNCERTAIN).
+- Verified end-to-end: `grounding.calibration.tuner.tune()` produces
+  Brier ~0.008 / ECE ~0.087 on the seed.
+
+### Lockstep version refresh
+
+- `pyproject.toml` 2026.5.15.19 -> 2026.5.15.20
+- `src/grounding/__init__.py` `__version__`
+- `src/grounding/provisioning/manifest.yaml`
+
 ## [2026.5.15.19] — 2026-05-01 — Lockstep bump for FASE α (Sentinel)
 
 Lockstep version bump to align with Sentinel `v2026.5.15.19` and
