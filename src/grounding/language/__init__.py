@@ -1,4 +1,10 @@
-"""grounding.language — locale-tag driven multilingual verification.
+"""grounding.language — locale-tag driven multilingual verification."""
 
-Phase 0 stub.
-"""
+from __future__ import annotations
+
+from grounding.language.multilingual import (
+    LocaleGlossary,
+    MultilingualVerifier,
+)
+
+__all__ = ["LocaleGlossary", "MultilingualVerifier"]
