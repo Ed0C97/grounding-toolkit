@@ -1,5 +1,0 @@
-[console_scripts]
-grounding = grounding.cli.main:main
-
-[sentinel_provisioning]
-grounding = grounding.provisioning:descriptor
