@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to lockstep CalVer (`YYYY.M.D.N`) with the
 Sentinel monorepo.
 
+## [2026.5.15.22] — 2026-05-02 — Synthetic seed expanded + lockstep
+
+### Changed — D6 calibration synthetic seed
+
+- `src/grounding/calibration/golden/sentinel-dd-synthetic.json`
+  v0.1.0 -> v0.2.0.  12 -> 29 records.  Coverage now spans 7
+  detector paths (evidence / definition / number / page /
+  paraphrase / temporal / derivation), GROUNDED+UNGROUNDED+UNCERTAIN
+  labels, IT-EN cross-language pairs, derivation arithmetic checks,
+  page-anchor adversarial, contradiction direct.
+
+### Lockstep version refresh
+
+- `pyproject.toml` 2026.5.15.21 -> 2026.5.15.22
+- `src/grounding/__init__.py` `__version__`
+- `src/grounding/provisioning/manifest.yaml`
+
 ## [2026.5.15.21] — 2026-05-02 — Lockstep marker (Sentinel mode=test patch)
 
 No grounding-toolkit code changes.  Lockstep with sentinel
