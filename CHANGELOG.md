@@ -9,8 +9,8 @@ Sentinel monorepo.
 ## [2026.5.15.23] — 2026-05-02 — Lockstep marker (sentinel profile rename)
 
 No grounding-toolkit code changes.  Lockstep with sentinel
-`v2026.5.15.23` (legacy profile rename: cohere_primary ->
-legacy_cohere_only) and cognis-toolkit `v2026.5.15.23`.
+`v2026.5.15.23` (legacy profile rename: single_vendor_primary ->
+legacy_single_vendor) and cognis-toolkit `v2026.5.15.23`.
 
 ## [2026.5.15.22] — 2026-05-02 — Synthetic seed expanded + lockstep
 
@@ -32,7 +32,7 @@ legacy_cohere_only) and cognis-toolkit `v2026.5.15.23`.
 ## [2026.5.15.21] — 2026-05-02 — Lockstep marker (Sentinel mode=test patch)
 
 No grounding-toolkit code changes.  Lockstep with sentinel
-``v2026.5.15.21`` (mode=test + Cohere refs cleanup + DSPy recompile
+``v2026.5.15.21`` (mode=test + LLM refs cleanup + DSPy recompile
 tool) and cognis-toolkit ``v2026.5.15.21``.
 
 ### Lockstep version refresh
@@ -65,7 +65,7 @@ Lockstep with sentinel `v2026.5.15.20` and cognis-toolkit
 
 Lockstep version bump to align with Sentinel `v2026.5.15.19` and
 cognis-toolkit `v2026.5.15.19`.  No grounding-toolkit code changes —
-this release is the marker that the Sentinel-side FASE α (Cohere →
+this release is the marker that the Sentinel-side FASE α (LLM →
 local-models migration) shipped.  The Tier 2/3/4 wiring (D5) lands
 in FASE β.
 

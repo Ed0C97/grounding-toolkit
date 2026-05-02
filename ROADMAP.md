@@ -66,7 +66,7 @@ grounding-toolkit follows the 21-Phase plan documented in
 
 ## Phase 20 — Release v2026.5.15.18
 
-## Future — D5 (post Cohere → local migration)
+## Future — D5 (post LLM → local migration)
 
 - Implementation bodies of `tiers/semantic.py`, `tiers/nli.py`, `tiers/llm_judge.py`
   using locally-served embedding / NLI / LLM-judge models routed through

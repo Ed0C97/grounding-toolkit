@@ -9,7 +9,7 @@ name = "grounding-toolkit"
 # rlm-toolkit, pdf-finder-toolkit).
 # 2026.5.15.0 — Phase 0 foundation (scaffold + provisioning bridge +
 #               testing module + smoke). 7th sibling toolkit.
-version = "2026.5.15.23"
+version = "2026.5.15.24"
 description = "Groundedness & hallucination detection — multi-tier cascade (consensus + lexical + semantic + NLI + LLM-judge), preventive citations, multimodal verification, explainable evidence, audit-grade Merkle proofs. Consumer-agnostic; embedding / NLI / LLM judge are injected."
 requires-python = ">=3.11"
 license = {text = "MIT"}

@@ -8,7 +8,7 @@ the claim if the maximum similarity meets the threshold.
 If no embedding function is injected the tier returns SKIPPED, allowing
 the cascade to proceed through subsequent tiers.
 
-Sentinel will inject a local-model EmbeddingFn after the Cohere → local
+Sentinel will inject a local-model EmbeddingFn after the LLM → local
 migration is complete (Phase D5).
 """
 

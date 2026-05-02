@@ -45,7 +45,7 @@ _DEFAULT_SYSTEM_PROMPT = (
 class ChatJsonFn(Protocol):
     """Async callable that takes a system + user prompt and returns
     parsed JSON.  Mirrors the signature of Sentinel's
-    ``sentinel.agents.cohere_client.chat_json`` so the migration is
+    ``sentinel.agents.llm_client.chat_json`` so the migration is
     drop-in for the existing call site."""
 
     async def __call__(

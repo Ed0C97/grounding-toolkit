@@ -7,7 +7,7 @@ earlier tiers are inconclusive (cascade orchestration handles ordering).
 
 If no judge function is injected the tier returns SKIPPED.
 
-Sentinel will inject a local-LLM judge after the Cohere → local
+Sentinel will inject a local-LLM judge after the LLM → local
 migration is complete (Phase D5).
 """
 

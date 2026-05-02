@@ -67,7 +67,7 @@ STEP 7     Temporal + definitional consistency
 
 STEP 8     Crossdoc retrieval (if RetrievalFn injected)
 
-STEP 9     Tier 2 — semantic embedding             ← D5 post-Cohere→local
+STEP 9     Tier 2 — semantic embedding             ← D5 post-LLM→local
 STEP 10    Tier 3 — NLI cross-encoder              ← D5
 STEP 11    Tier 4 — LLM-as-judge                   ← D5
 

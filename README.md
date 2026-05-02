@@ -26,7 +26,7 @@ The 7th sibling of the Sentinel monorepo, alongside `cognis-toolkit`,
 ## Design principles
 
 - **Provider-agnostic**: embedding / NLI / LLM-judge / retrieval are
-  Protocols. Inject any backend (Cohere, OpenAI, local Sentence-Transformers,
+  Protocols. Inject any backend (LLM, OpenAI, local Sentence-Transformers,
   custom, ...).
 - **Domain-agnostic**: zero domain knowledge baked in. The toolkit
   ships a pure verification engine. Domain-specific assets — financial
