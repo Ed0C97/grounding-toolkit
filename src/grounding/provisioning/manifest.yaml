@@ -1,5 +1,5 @@
 toolkit: grounding-toolkit
-version: "2026.5.15.32"
+version: "2026.5.15.34"
 groups:
   - id: smoke
     name: "Smoke (10s)"
