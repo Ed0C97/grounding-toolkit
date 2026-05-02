@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to lockstep CalVer (`YYYY.M.D.N`) with the
 Sentinel monorepo.
 
+## [2026.5.15.21] — 2026-05-02 — Lockstep marker (Sentinel mode=test patch)
+
+No grounding-toolkit code changes.  Lockstep with sentinel
+``v2026.5.15.21`` (mode=test + Cohere refs cleanup + DSPy recompile
+tool) and cognis-toolkit ``v2026.5.15.21``.
+
+### Lockstep version refresh
+
+- `pyproject.toml` 2026.5.15.20 -> 2026.5.15.21
+- `src/grounding/__init__.py` `__version__`
+- `src/grounding/provisioning/manifest.yaml`
+
 ## [2026.5.15.20] — 2026-05-01 — D6 synthetic seed + FASE β lockstep
 
 Lockstep with sentinel `v2026.5.15.20` and cognis-toolkit
