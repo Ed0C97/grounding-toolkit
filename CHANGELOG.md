@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to lockstep CalVer (`YYYY.M.D.N`) with the
 Sentinel monorepo.
 
+## [2026.5.15.23] — 2026-05-02 — Lockstep marker (sentinel profile rename)
+
+No grounding-toolkit code changes.  Lockstep with sentinel
+`v2026.5.15.23` (legacy profile rename: cohere_primary ->
+legacy_cohere_only) and cognis-toolkit `v2026.5.15.23`.
+
 ## [2026.5.15.22] — 2026-05-02 — Synthetic seed expanded + lockstep
 
 ### Changed — D6 calibration synthetic seed
