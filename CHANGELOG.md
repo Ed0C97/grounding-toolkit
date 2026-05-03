@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to lockstep CalVer (`YYYY.M.D.N`) with the
 Sentinel monorepo.
 
+## [2026.5.15.42] — 2026-05-03 — Lockstep release
+
+Lockstep release with Sentinel `v2026.5.15.42`. No runtime API changes
+in this toolkit; the cofounder-maintained READMEs now carry the
+standardised YAML frontmatter used across the Sentinel monorepo
+(`README.md`, `examples/README.md`). Version bumped in lockstep so the
+calendar tag matches the rest of the family.
+
 ## [2026.5.15.23] — 2026-05-02 — Lockstep marker (sentinel profile rename)
 
 No grounding-toolkit code changes.  Lockstep with sentinel

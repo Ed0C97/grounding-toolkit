@@ -1,3 +1,10 @@
+---
+path: examples/README.md
+section: examples
+doc-type: index
+status: stable
+last_updated: 2026-05-03
+---
 # Examples
 
 Numbered scripts demonstrating grounding-toolkit features.

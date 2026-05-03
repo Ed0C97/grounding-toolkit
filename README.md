@@ -1,3 +1,10 @@
+---
+path: README.md
+section: repo-root
+doc-type: package-readme
+status: stable
+last_updated: 2026-05-03
+---
 # grounding-toolkit
 
 Multi-tier groundedness & hallucination detection for LLM outputs.
