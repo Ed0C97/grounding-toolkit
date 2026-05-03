@@ -1,3 +1,10 @@
+---
+path: CHANGELOG.md
+section: repo-root
+doc-type: changelog
+status: stable
+last_updated: 2026-05-03
+---
 # Changelog
 
 All notable changes to grounding-toolkit are documented here.
@@ -6,6 +13,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to lockstep CalVer (`YYYY.M.D.N`) with the
 Sentinel monorepo.
 
+## [2026.5.15.43] — 2026-05-03 — Doc standardisation lockstep
+
+Lockstep release with Sentinel `v2026.5.15.43`. No runtime API changes;
+the standardised YAML frontmatter (`path`, `section`, `doc-type`,
+`status`, `last_updated`) was extended to every non-vendored Markdown
+file in this repository (CHANGELOG, governance docs, ADRs, examples,
+internal notes). Version bumped in lockstep so the calendar tag matches
+the rest of the family. Tags from this version onward are SSH-signed.
 ## [2026.5.15.42] — 2026-05-03 — Lockstep release
 
 Lockstep release with Sentinel `v2026.5.15.42`. No runtime API changes

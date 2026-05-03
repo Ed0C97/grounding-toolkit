@@ -1,3 +1,10 @@
+---
+path: SECURITY.md
+section: repo-root
+doc-type: security
+status: stable
+last_updated: 2026-05-03
+---
 # Security policy
 
 ## Reporting a vulnerability

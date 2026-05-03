@@ -1,3 +1,10 @@
+---
+path: CODE_OF_CONDUCT.md
+section: repo-root
+doc-type: governance
+status: stable
+last_updated: 2026-05-03
+---
 # Code of conduct
 
 ## Our pledge

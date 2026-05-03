@@ -1,3 +1,10 @@
+---
+path: SUPPORT.md
+section: repo-root
+doc-type: support
+status: stable
+last_updated: 2026-05-03
+---
 # Support
 
 ## Bug reports & feature requests

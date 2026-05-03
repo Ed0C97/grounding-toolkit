@@ -1,3 +1,10 @@
+---
+path: STRUCTURE.md
+section: repo-root
+doc-type: index
+status: stable
+last_updated: 2026-05-03
+---
 # Repository structure
 
 ```

@@ -1,3 +1,10 @@
+---
+path: MAINTAINERS.md
+section: repo-root
+doc-type: governance
+status: stable
+last_updated: 2026-05-03
+---
 # Maintainers
 
 This file is intentionally minimal. The project is maintained as part

@@ -1,3 +1,10 @@
+---
+path: ROADMAP.md
+section: repo-root
+doc-type: roadmap
+status: stable
+last_updated: 2026-05-03
+---
 # Roadmap
 
 grounding-toolkit follows the 21-Phase plan documented in

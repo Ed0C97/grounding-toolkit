@@ -1,3 +1,10 @@
+---
+path: docs/PHASE_0_NOTES.md
+section: docs
+doc-type: docs
+status: stable
+last_updated: 2026-05-03
+---
 # Phase 0 — Foundation notes
 
 ## What landed in 2026.5.15.0

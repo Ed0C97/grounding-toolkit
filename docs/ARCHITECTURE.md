@@ -1,3 +1,10 @@
+---
+path: docs/ARCHITECTURE.md
+section: docs
+doc-type: docs
+status: stable
+last_updated: 2026-05-03
+---
 # Architecture
 
 ## Overview

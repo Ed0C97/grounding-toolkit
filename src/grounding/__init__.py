@@ -25,7 +25,7 @@ consensus, tracking, spatial, answer).
 
 from __future__ import annotations
 
-__version__ = "2026.5.15.42"
+__version__ = "2026.5.15.43"
 
 from grounding.core.cascade import GroundingVerifier
 from grounding.core.thresholds import ThresholdProfile, modulate
